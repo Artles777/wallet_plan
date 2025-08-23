@@ -1,0 +1,40 @@
+import "package:flutter/material.dart";
+import "package:provider/provider.dart";
+import "package:wallet_plan/helpers/variables/colors.dart";
+import "package:wallet_plan/store/base.dart";
+import "package:wallet_plan/store/home.dart";
+
+class EditAccountFormWidget extends StatelessWidget {
+  const EditAccountFormWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final state = Provider.of<HomeState>(context);
+    final baseState = Provider.of<BaseState>(context);
+
+    return CustomScrollView(
+      slivers: [
+        SliverList(
+          delegate: SliverChildListDelegate([
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: const DecoratedBox(
+                decoration: BoxDecoration(color: PrimaryColors.primary99),
+                child: SafeArea(
+                  minimum: EdgeInsets.only(
+                    top: 20.0,
+                    left: 16.0,
+                    right: 16.0,
+                  ),
+                  child: Column(
+                    children: [],
+                  ),
+                ),
+              ),
+            )
+          ]),
+        )
+      ],
+    );
+  }
+}

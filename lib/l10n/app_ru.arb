@@ -1,0 +1,9 @@
+{
+  "accounts": "Счета",
+  "income": "Доход",
+  "expense": "Расход",
+  "settings_chart": "Настройки графика",
+  "settings_charts": "Настройки графиков",
+  "categories": "Категории",
+  "main_pages": "{page, select, categories{Категории} news{Лента новостей} settings{Настройки} help{Помощь} other{-}}"
+}
