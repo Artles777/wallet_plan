@@ -51,6 +51,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   flutter_screenutil: ^5.9.0
   faker: ^2.1.0
+  slang: ^4.11.1
 
 dev_dependencies:
   flutter_test:

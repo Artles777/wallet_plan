@@ -23,13 +23,14 @@ mixin _$AddCardState on _AddCardState, Store {
     () => super.type,
     name: '_AddCardState.type',
   )).value;
-  Computed<TypeCardEnum>? _$currencyComputed;
+  Computed<CurrencyCardEnum>? _$currencyComputed;
 
   @override
-  TypeCardEnum get currency => (_$currencyComputed ??= Computed<TypeCardEnum>(
-    () => super.currency,
-    name: '_AddCardState.currency',
-  )).value;
+  CurrencyCardEnum get currency =>
+      (_$currencyComputed ??= Computed<CurrencyCardEnum>(
+        () => super.currency,
+        name: '_AddCardState.currency',
+      )).value;
   Computed<int>? _$titleCountComputed;
 
   @override

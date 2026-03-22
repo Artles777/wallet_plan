@@ -94,7 +94,7 @@ abstract class _AddCardState with Store {
   TypeCardEnum get type => _form.type.value;
 
   @computed
-  TypeCardEnum get currency => _form.type.value;
+  CurrencyCardEnum get currency => _form.currency.value;
 
   @computed
   int get titleCount => title.length;
@@ -134,6 +134,11 @@ abstract class _AddCardState with Store {
 
   @action
   void changeBalance(String value) {
+    if (value.isEmpty) {
+      _form.balance.value = 0.0;
+      return;
+    }
+
     _form.balance.value = double.parse(double.parse(value).toStringAsFixed(2));
   }
 

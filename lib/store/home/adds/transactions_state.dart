@@ -26,13 +26,13 @@ class FormTransactionsDTO {
   });
 
   final Observable<double> amount;
-  final Observable<String>? category;
+  final Observable<String?>? category;
   final Observable<String> cardId;
   final Observable<String> date;
-  final Observable<String>? comment;
+  final Observable<String?>? comment;
   final Observable<bool> repeatOperation;
   final Observable<bool> notification;
-  final Observable<String>? reminder;
+  final Observable<String?>? reminder;
 }
 
 class TransactionsState = _TransactionsState with _$TransactionsState;
@@ -44,10 +44,10 @@ abstract class _TransactionsState with Store {
   final TextEditingController commentController = TextEditingController();
   final TextEditingController reminderController = TextEditingController();
 
-  @computed
-  TextEditingController get dateController => TextEditingController(
-        text: initialDate,
-      );
+  late final TextEditingController _dateController = TextEditingController(
+    text: initialDate,
+  );
+
   final DateRangePickerController datepickerController =
       DateRangePickerController();
 
@@ -57,13 +57,13 @@ abstract class _TransactionsState with Store {
     "Продукты",
     "Одежда",
     "Транспорт",
-    "Электрика"
+    "Электрика",
   ];
   final List<String> incomeList = [
     "Инвестиции",
     "Бизнес",
     "Зарплата",
-    "Деньги подаренные"
+    "Деньги подаренные",
   ];
 
   final String? initialIncome = "Зарплата";
@@ -72,15 +72,24 @@ abstract class _TransactionsState with Store {
   final String initialDate = DateFormat("dd.MM.yyyy").format(DateTime.now());
 
   @computed
-  FormTransactionsDTO get _form => FormTransactionsDTO(
-      amount: Observable(0.0),
-      cardId: Observable(initialCard),
-      date: Observable(initialDate),
-      repeatOperation: Observable(false),
-      notification: Observable(false));
+  TextEditingController get dateController => _dateController;
+
+  late final FormTransactionsDTO _formState = FormTransactionsDTO(
+    amount: Observable(0.0),
+    category: Observable<String?>(initialIncome),
+    cardId: Observable(initialCard),
+    date: Observable(initialDate),
+    comment: Observable<String?>(""),
+    repeatOperation: Observable(false),
+    notification: Observable(false),
+    reminder: Observable<String?>(""),
+  );
 
   @observable
   TransactionNameEnum transactionName = TransactionNameEnum.income;
+
+  @computed
+  FormTransactionsDTO get _form => _formState;
 
   @computed
   String get transactionConvertedName => transactions[transactionName]!;
@@ -112,20 +121,15 @@ abstract class _TransactionsState with Store {
   @computed
   List<DropdownMenuEntry<String>> get categories =>
       (hasIncome ? incomeList : expenseList)
-          .map(
-            (item) => DropdownMenuEntry(value: item, label: item),
-          )
+          .map((item) => DropdownMenuEntry(value: item, label: item))
           .toList();
 
   @computed
   String? get initialCategory => hasIncome ? initialIncome : initialExpense;
 
   @computed
-  List<DropdownMenuEntry<String>> get cardsList => HomeState()
-      .cardsList
-      .map(
-        (item) => DropdownMenuEntry(value: item.id, label: item.title),
-      )
+  List<DropdownMenuEntry<String>> get cardsList => HomeState().cardsList
+      .map((item) => DropdownMenuEntry(value: item.id, label: item.title))
       .toList();
 
   @computed
@@ -202,7 +206,7 @@ abstract class _TransactionsState with Store {
   }
 
   @action
-  void openQrCode () {
+  void openQrCode() {
     print("openQrCode");
   }
 }
